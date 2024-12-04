@@ -3,7 +3,7 @@ package com.educacional.educacional.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Professor")
+@Table(name = "professores")
 public class Professor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
