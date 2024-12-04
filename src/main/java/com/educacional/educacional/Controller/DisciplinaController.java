@@ -8,6 +8,7 @@ import com.educacional.educacional.repository.CursoRepository;
 import com.educacional.educacional.repository.DisciplinaRepository;
 import com.educacional.educacional.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,20 +25,20 @@ public class DisciplinaController {
 
     // Buscando todos os alunos
     @GetMapping
-    public List<Disciplina> findAll() {
-        return this.repository.findAll();
+    public ResponseEntity<List<Disciplina>> findAll() {
+        return ResponseEntity.ok(this.repository.findAll());
     }
 
     // Buscando os alunos por id
     @GetMapping("/{id}")
-    public Disciplina findById(@PathVariable Integer id) {
-        return this.repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Não foi possivel encontrado a disciplina"));
+    public ResponseEntity<Disciplina> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(this.repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Não foi possivel encontrado a disciplina")));
     }
 
     // criar um aluno
     @PostMapping
-    public Disciplina save(@RequestBody DisciplinaRequestDTO dto) {
+    public ResponseEntity<Disciplina> save(@RequestBody DisciplinaRequestDTO dto) {
         Disciplina disciplina = new Disciplina();
 
         Curso curso = this.cursoRepository.findById(dto.curso_id())
@@ -52,12 +53,12 @@ public class DisciplinaController {
         disciplina.setCurso(curso);
         disciplina.setProfessor(professor);
 
-        return this.repository.save(disciplina);
+        return ResponseEntity.ok(this.repository.save(disciplina));
     }
 
     // atualizar um aluno
     @PutMapping("/{id}")
-    public Disciplina update(@PathVariable Integer id, @RequestBody DisciplinaRequestDTO dto) {
+    public ResponseEntity<Disciplina> update(@PathVariable Integer id, @RequestBody DisciplinaRequestDTO dto) {
         Disciplina disciplina = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Não foi possivel encontrado o disciplina"));
 
@@ -73,16 +74,17 @@ public class DisciplinaController {
         disciplina.setCurso(curso);
         disciplina.setProfessor(professor);
 
-        return this.repository.save(disciplina);
+        return ResponseEntity.ok(this.repository.save(disciplina));
     }
 
     // deletar um aluno
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         Disciplina disciplina = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Não foi possivel encontrado o disciplina"));
 
         this.repository.delete(disciplina);
+        return ResponseEntity.ok().build();
     }
 
 
