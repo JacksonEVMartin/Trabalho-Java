@@ -1,8 +1,6 @@
 package com.educacional.educacional.Controller;
 
-import com.educacional.educacional.dto.AlunoRequestDTO;
 import com.educacional.educacional.dto.TurmaRequestDTO;
-import com.educacional.educacional.model.Aluno;
 import com.educacional.educacional.model.Curso;
 import com.educacional.educacional.model.Turma;
 import com.educacional.educacional.repository.CursoRepository;
